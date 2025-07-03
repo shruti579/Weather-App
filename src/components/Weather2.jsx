@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import './Weather.css'
-import search_icon from '../Assets/search.png'
-import clear_icon from '../Assets/clear.png'
-import cloud_icon from '../Assets/cloud.png'
-import drizzle_icon from '../Assets/drizzle.png'
-import wind_icon from '../Assets/wind.png'
-import rain_icon from '../Assets/rain.png'
-import snow_icon from '../Assets/snow.png'
-import humidity_icon from '../Assets/humidity.png'
+import React, { useState } from "react";
+import "./Weather.css";
+import search_icon from "../Assets/search.png";
+import clear_icon from "../Assets/clear.png";
+import cloud_icon from "../Assets/cloud.png";
+import drizzle_icon from "../Assets/drizzle.png";
+import wind_icon from "../Assets/wind.png";
+import rain_icon from "../Assets/rain.png";
+import snow_icon from "../Assets/snow.png";
+import humidity_icon from "../Assets/humidity.png";
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(false);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState("");
 
   const handleChange = (e) => {
     setCity(e.target.value);
@@ -30,7 +30,7 @@ const Weather = () => {
     "010d": rain_icon,
     "010n": rain_icon,
     "13d": snow_icon,
-    "13n": snow_icon
+    "13n": snow_icon,
   };
 
   const search = async () => {
@@ -40,8 +40,7 @@ const Weather = () => {
     }
 
     try {
-      const apiKey = '69e0224c305c19cc91b9df3bcff9108e'; 
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`;
 
       const response = await fetch(url);
       const data = await response.json();
@@ -65,7 +64,7 @@ const Weather = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       search(); // Trigger the search function when the Enter key is pressed
     }
   };
@@ -73,10 +72,10 @@ const Weather = () => {
   return (
     <div className="weather">
       <div className="search-bar">
-        <input 
-          value={city} 
-          type="text" 
-          placeholder="Search" 
+        <input
+          value={city}
+          type="text"
+          placeholder="Search"
           onChange={handleChange}
           onKeyDown={handleKeyPress} // Listen for key presses
         />
@@ -85,10 +84,10 @@ const Weather = () => {
 
       {weatherData ? (
         <>
-          <img 
-            className="weather-icon" 
-            src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} 
-            alt="" 
+          <img
+            className="weather-icon"
+            src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+            alt=""
           />
           <p className="temp">{Math.floor(weatherData.main.temp)}°c</p>
           <p className="location">{weatherData.name}</p>
@@ -110,8 +109,7 @@ const Weather = () => {
           </div>
         </>
       ) : (
-        <>
-        </>
+        <></>
       )}
     </div>
   );
